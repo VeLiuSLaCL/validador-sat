@@ -61,8 +61,8 @@ if uploaded_file is not None:
             st.write("Selecciona la factura con la que te deseas quedar para tu control interno. El sistema le sumará automáticamente los montos de las demás.")
             
             # El usuario elige con qué identificador/UUID quedarse
-            opciones_seleccion = [f"{d['ID Interno']} ({d['UUID'][-8:]}...)" for d in datos_facturas]
-            seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
+opciones_seleccion = [f"{d['ID Interno']} ({d['UUID (Folio Fiscal)'][-8:]}...)" for d in datos_facturas]
+seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
             
             # Obtener el índice de la factura seleccionada
             idx_seleccionado = opciones_seleccion.index(seleccion)
