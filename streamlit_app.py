@@ -60,9 +60,9 @@ if uploaded_file is not None:
             st.subheader("🎯 Consolidación Personalizada")
             st.write("Selecciona la factura con la que te deseas quedar para tu control interno. El sistema le sumará automáticamente los montos de las demás.")
             
-            # El usuario elige con qué identificador/UUID quedarse
-opciones_seleccion = [f"{d['ID Interno']} ({d['UUID (Folio Fiscal)'][-8:]}...)" for d in datos_facturas]
-seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
+            # El usuario elige con qué identificador/UUID quedarse (CORREGIDO AQUÍ)
+            opciones_seleccion = [f"{d['ID Interno']} ({d['UUID (Folio Fiscal)'][-8:]}...)" for d in datos_facturas]
+            seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
             
             # Obtener el índice de la factura seleccionada
             idx_seleccionado = opciones_seleccion.index(seleccion)
@@ -80,7 +80,7 @@ seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
                 st.metric(label="Monto Consolidado (Suma Total)", value=f"${monto_total_xml:,.2f}")
                 st.caption(f"Original: ${factura_principal['Monto Relacionado']:,.2f} + Ajustes detectados.")
                 
-            # Crear un botón para descargar un reporte limpio en Excel/CSV si lo necesitas
+            # Crear un PDF o excel simulado en CSV
             reporte_final = pd.DataFrame([{
                 'Factura_Control': factura_principal['ID Interno'],
                 'UUID_Oficial': factura_principal['UUID (Folio Fiscal)'],
@@ -96,4 +96,4 @@ seleccion = st.selectbox("Conservar factura:", opciones_seleccion)
             )
             
     except Exception as e:
-        st.error(f"Hubo un error al procesar el archivo XML. Asegúrate de que sea un CFDI de pago válido. Error: {e}")
+        st.error(f"Hubo un error al procesar el archivo XML. Asegúrate de que sea un CFDI de pago válido. Error: '{e}'")
